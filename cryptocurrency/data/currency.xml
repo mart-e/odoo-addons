@@ -1,0 +1,8 @@
+<odoo>
+
+    <record forcecreate="True" id="decimal_currency" model="decimal.precision">
+        <field name="name">Currency Precision</field>
+        <field name="digits" eval="10"/>
+    </record>
+
+</odoo>

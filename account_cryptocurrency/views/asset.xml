@@ -1,0 +1,29 @@
+<odoo>
+
+    <record id="crypto_currency_rate_tree_view" model="ir.ui.view">
+        <field name="name">crypto.currency.asset.tree</field>
+        <field name="model">crypto.currency.asset</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="currency_id" />
+                <field name="quantity" />
+                <field name="value" sum="Total"/>
+                <field name="company_currency_id" invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="crypto_currency_rate_action" model="ir.actions.act_window">
+        <field name="name">Crypto Assets</field>
+        <field name="res_model">crypto.currency.asset</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem
+            name="Crypto Assets"
+            parent="account.menu_finance"
+            action="crypto_currency_rate_action"
+            id="menu_action_crypto_currency_asset"/>
+
+</odoo>

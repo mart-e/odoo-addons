@@ -1,0 +1,33 @@
+<odoo>
+
+    <record id="crypto_currency_sync_wizard_view" model="ir.ui.view">
+        <field name="name">crypto.currency.rate.sync.form</field>
+        <field name="model">crypto.currency.rate.sync</field>
+        <field name="arch" type="xml">
+            <form string="Sync Rates">
+                <group>
+                    <field name="sync_type" />
+                    <field name="currency_id"
+                           attrs="{'invisible': [('sync_type', '!=', 'one')],
+                                   'required': [('sync_type', '=', 'one')]}"
+                           domain="[('rounding', '&lt;', 0.01)]"
+                         />
+                </group>
+                <footer>
+                    <button string='Sync' name="action_sync_rate" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window
+        id="action_crypto_currency_sync_wizard"
+        name="Sync Crypto Rates"
+        res_model="crypto.currency.rate.sync"
+        src_model="res.currency"
+        view_mode="form"
+        target="new"
+        />
+
+</odoo>
