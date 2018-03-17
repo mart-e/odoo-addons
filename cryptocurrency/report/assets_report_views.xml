@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_crypto_asset_report_pivot" model="ir.ui.view">
+         <field name="name">crypto.asset.report.pivot</field>
+         <field name="model">crypto.currency.asset.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Crypto Assets">
+                 <field name="currency_id" type="row"/>
+                 <field name="company_id" type="row"/>
+                 <field name="total_value" type="measure"/>
+                 <field name="quantity" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_crypto_asset_report_graph" model="ir.ui.view">
+         <field name="name">crypto.asset.report.graph</field>
+         <field name="model">crypto.currency.asset.report</field>
+         <field name="arch" type="xml">
+             <graph string="Crypto Assets Analysis">
+                 <field name="currency_id"/>
+                 <field name="total_value" type="measure"/>
+                 <field name="quantity" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="action_crypto_asset_report_all" model="ir.actions.act_window">
+        <field name="name">Crypto Assets Analysis</field>
+        <field name="res_model">crypto.currency.asset.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+    </record>
+
+    <menuitem
+            name="Crypto Assets Analysis"
+            parent="menu_action_crypto_currency"
+            action="action_crypto_asset_report_all"
+            id="menu_action_crypto_currency_asset_analysis"/>
+
+</odoo>

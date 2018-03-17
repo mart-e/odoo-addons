@@ -15,6 +15,8 @@ Track the current value of all your assets
 
         'views/asset.xml',
         'views/sync_wizard.xml',
+
+        'report/assets_report_views.xml',
     ],
     'demo': [
     ],
