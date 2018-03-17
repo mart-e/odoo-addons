@@ -21,8 +21,12 @@
     </record>
 
     <menuitem
-            name="Crypto Assets"
+            name="Crypto Currencies"
             parent="account.menu_finance"
+            id="menu_action_crypto_currency"/>
+    <menuitem
+            name="Assets"
+            parent="menu_action_crypto_currency"
             action="crypto_currency_rate_action"
             id="menu_action_crypto_currency_asset"/>
 
