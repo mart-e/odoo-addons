@@ -41,9 +41,13 @@ class RateSync(models.TransientModel):
         ResCurrencyRate = self.env['res.currency.rate']
 
         url = urljoin(API_END_POINT, "ticker/")
-        req = requests.get(url, params={
-            'limit':limit, 'convert': base_currency.name,
-        })
+        try:
+            req = requests.get(url, params={
+                'limit':limit, 'convert': base_currency.name,
+            })
+        except requests.exceptions.RequestException as e:
+            _logger.error("Call to %s failed. Error: %s", url, str(e))
+            return False
 
         for currency in req.json():
             code = currency['symbol']
@@ -64,7 +68,7 @@ class RateSync(models.TransientModel):
                     'currency_unit_label': name,
                     'symbol': code,
                 })
-            date = time.strftime("%Y-%m-%S", time.gmtime(int(currency['last_updated'])))
+            date = time.strftime("%Y-%m-%d", time.gmtime(int(currency['last_updated'])))
             if ResCurrencyRate.search_count([('name', '=', date), ('currency_id', '=', c.id)]):
                 # unicity constrain, one rate per day
                 continue
@@ -93,9 +97,13 @@ class RateSync(models.TransientModel):
         ResCurrencyRate = self.env['res.currency.rate']
 
         url = urljoin(urljoin(API_END_POINT, "ticker/"), currency.currency_unit_label)
-        req = requests.get(url, params={
-            'convert': base_currency.name,
-        })
+        try:
+            req = requests.get(url, params={
+                'convert': base_currency.name,
+            })
+        except requests.exceptions.RequestException as e:
+            _logger.error("Call to %s failed. Error: %s", url, str(e))
+            return False
 
         res = req.json()
         if isinstance(res, dict) and res.get('error'):
