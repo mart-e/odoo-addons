@@ -7,9 +7,8 @@
          <field name="arch" type="xml">
              <pivot string="Crypto Assets">
                  <field name="currency_id" type="row"/>
-                 <field name="company_id" type="row"/>
+                 <field name="rate_date" type="col"/>
                  <field name="total_value" type="measure"/>
-                 <field name="quantity" type="measure"/>
              </pivot>
          </field>
     </record>

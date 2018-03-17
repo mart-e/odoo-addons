@@ -11,7 +11,7 @@ class ResCurrencyAssetReport(models.Model):
     currency_id = fields.Many2one('res.currency', string="Asset", readonly=True)
     quantity = fields.Float(readonly=True)
     total_value = fields.Float(readonly=True)
-    # date = fields.Datetime(readonly=True)
+    rate_date = fields.Date(readonly=True)
     company_id = fields.Many2one('res.company', readonly=True)
     # company_currency_id = fields.Many2one('res.currency', readonly=True)
 
@@ -22,6 +22,7 @@ class ResCurrencyAssetReport(models.Model):
                     a.currency_id as currency_id,
                     sum(a.quantity) as quantity,
                     sum(a.quantity / COALESCE(cr.rate, 1.0)) as total_value,
+                    cr.date_start as rate_date,
                     a.company_id as company_id
         """ % self.env['res.currency']._select_companies_rates()
         return select_str
@@ -40,7 +41,8 @@ class ResCurrencyAssetReport(models.Model):
     def _group_by(self):
         group_by_str = """
             GROUP BY a.currency_id,
-                    a.company_id
+                    a.company_id,
+                    cr.date_start
         """
         return group_by_str
 
